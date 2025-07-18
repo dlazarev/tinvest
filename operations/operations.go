@@ -29,6 +29,8 @@ func (a Amount) Sum() float64 {
 
 type Portfolio struct {
 	TotalAmountPortfolio Amount
+	DailyYield           Amount
+	DailyYieldRelative   Amount
 }
 
 func GetPositions(token string, accountId string) string {
