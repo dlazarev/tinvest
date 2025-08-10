@@ -31,13 +31,52 @@ type Portfolio struct {
 	TotalAmountPortfolio Amount
 	DailyYield           Amount
 	DailyYieldRelative   Amount
+	TotalAmountBonds     Amount // Облигации
+	TotalAmountFutures   Amount // Фьючерсы
+	TotalAmountSp        Amount
+	TotalAmountEtf       Amount // Фонды
+	TotalAmountShares    Amount // Акции
 }
 
-func GetPositions(token string, accountId string) string {
+type SecurityType string
+
+const (
+	Bond     SecurityType = "bond"
+	Currency SecurityType = "currency"
+	Etf      SecurityType = "etf"
+	Future   SecurityType = "future"
+	Option   SecurityType = "option"
+	Share    SecurityType = "share"
+)
+
+type Security struct {
+	Figi            string
+	Blocked         string
+	Balance         string
+	PositionUid     string
+	Ticker          string
+	ExchangeBlocked bool
+	InstrumentType  string
+}
+
+type Positions struct {
+	Money      []Amount
+	Blocked    []Amount
+	Securities []Security
+}
+
+func GetPositions(token string, accountId string) Positions {
 	url := "https://invest-public-api.tinkoff.ru/rest/tinkoff.public.invest.api.contract.v1.OperationsService/GetPositions"
 	payload := fmt.Sprintf(`{"accountId":"%s"}`, accountId)
 
-	return tinvest.GetAPIRequest(url, token, payload)
+	var positions Positions
+
+	data := tinvest.GetAPIRequest(url, token, payload)
+	err := json.Unmarshal([]byte(data), &positions)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return positions
 }
 
 func GetPortfolio(token string, accoundId string) Portfolio {
