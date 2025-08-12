@@ -38,6 +38,30 @@ type Portfolio struct {
 	TotalAmountShares    Amount // Акции
 }
 
+type IntString int
+
+func (i *IntString) UnmarshalJSON(data []byte) error {
+	if len(data) > 0 && data[0] == '"' {
+		var s string
+		if err := json.Unmarshal(data, &s); err != nil {
+			return err
+		}
+		v , err := strconv.Atoi(s)
+		if err != nil {
+			return err
+		}
+		*i = IntString(v)
+		return nil
+	}
+
+	var v int
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	*i = IntString(v)
+	return nil
+}
+
 type SecurityType string
 
 const (
@@ -51,8 +75,8 @@ const (
 
 type Security struct {
 	Figi            string
-	Blocked         string
-	Balance         string
+	Blocked         IntString `json:"blocked"`
+	Balance         IntString `json:"balance"`
 	PositionUid     string
 	Ticker          string
 	ExchangeBlocked bool
