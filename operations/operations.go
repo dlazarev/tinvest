@@ -46,7 +46,7 @@ func (i *IntString) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &s); err != nil {
 			return err
 		}
-		v , err := strconv.Atoi(s)
+		v, err := strconv.Atoi(s)
 		if err != nil {
 			return err
 		}
@@ -61,17 +61,6 @@ func (i *IntString) UnmarshalJSON(data []byte) error {
 	*i = IntString(v)
 	return nil
 }
-
-type SecurityType string
-
-const (
-	Bond     SecurityType = "bond"
-	Currency SecurityType = "currency"
-	Etf      SecurityType = "etf"
-	Future   SecurityType = "future"
-	Option   SecurityType = "option"
-	Share    SecurityType = "share"
-)
 
 type Security struct {
 	Figi            string

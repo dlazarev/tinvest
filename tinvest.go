@@ -7,6 +7,17 @@ import (
 	"strings"
 )
 
+type SecurityType string
+
+const (
+	Bond     SecurityType = "bond"
+	Currency SecurityType = "currency"
+	Etf      SecurityType = "etf"
+	Future   SecurityType = "future"
+	Option   SecurityType = "option"
+	Share    SecurityType = "share"
+)
+
 func GetAPIRequest(url string, token string, payload_str string) string {
 	method := "POST"
 	payload := strings.NewReader(payload_str)
