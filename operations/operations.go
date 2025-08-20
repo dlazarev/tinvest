@@ -4,6 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"ldv/tinvest"
+	"ldv/tinvest/instruments"
+
+	//	"ldv/tinvest/instruments"
 	"log"
 	"strconv"
 )
@@ -12,30 +15,15 @@ import (
 //	Sum() float64
 //}
 
-type Amount struct {
-	Currency string
-	Units    string
-	Nano     int
-}
-
-func (a Amount) Sum() float64 {
-	sum, err := strconv.ParseFloat(a.Units, 32)
-	if err != nil {
-		log.Fatal(err)
-	}
-	sum += float64(a.Nano) / 10e8
-	return sum
-}
-
 type Portfolio struct {
-	TotalAmountPortfolio Amount
-	DailyYield           Amount
-	DailyYieldRelative   Amount
-	TotalAmountBonds     Amount // Облигации
-	TotalAmountFutures   Amount // Фьючерсы
-	TotalAmountSp        Amount
-	TotalAmountEtf       Amount // Фонды
-	TotalAmountShares    Amount // Акции
+	TotalAmountPortfolio tinvest.Amount
+	DailyYield           tinvest.Amount
+	DailyYieldRelative   tinvest.Amount
+	TotalAmountBonds     tinvest.Amount // Облигации
+	TotalAmountFutures   tinvest.Amount // Фьючерсы
+	TotalAmountSp        tinvest.Amount
+	TotalAmountEtf       tinvest.Amount // Фонды
+	TotalAmountShares    tinvest.Amount // Акции
 }
 
 type IntString int
@@ -69,12 +57,12 @@ type Security struct {
 	PositionUid     string
 	Ticker          string
 	ExchangeBlocked bool
-	InstrumentType  string
+	InstrumentType  tinvest.SecurityType
 }
 
 type Positions struct {
-	Money      []Amount
-	Blocked    []Amount
+	Money      []tinvest.Amount
+	Blocked    []tinvest.Amount
 	Securities []Security
 }
 
@@ -88,6 +76,11 @@ func GetPositions(token string, accountId string) Positions {
 	err := json.Unmarshal([]byte(data), &positions)
 	if err != nil {
 		log.Fatal(err)
+	}
+
+	for _, sec := range positions.Securities {
+		secDesc := instruments.SecurityBy(token, sec.Figi, sec.InstrumentType)
+		fmt.Println(secDesc)
 	}
 	return positions
 }

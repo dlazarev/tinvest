@@ -4,10 +4,32 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"strconv"
 	"strings"
 )
 
+type Amount struct {
+	Currency string
+	Units    string
+	Nano     int
+}
+
+func (a Amount) Sum() float64 {
+	sum, err := strconv.ParseFloat(a.Units, 32)
+	if err != nil {
+		log.Fatal(err)
+	}
+	sum += float64(a.Nano) / 10e8
+	return sum
+}
+
 type SecurityType string
+
+type Brand struct {
+	LogoName      string
+	LogoBaseColor string
+	TextColor     string
+}
 
 const (
 	Bond     SecurityType = "bond"
