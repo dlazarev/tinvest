@@ -58,6 +58,7 @@ type Security struct {
 	Ticker          string
 	ExchangeBlocked bool
 	InstrumentType  tinvest.SecurityType
+	InstrumentDesc  instruments.SecurityDesc
 }
 
 type Positions struct {
@@ -78,8 +79,9 @@ func GetPositions(token string, accountId string) Positions {
 		log.Fatal(err)
 	}
 
-	for _, sec := range positions.Securities {
-		secDesc := instruments.SecurityBy(token, sec.Figi, sec.InstrumentType)
+	for i := range positions.Securities {
+		secDesc := instruments.SecurityBy(token, positions.Securities[i].Figi, positions.Securities[i].InstrumentType)
+		positions.Securities[i].InstrumentDesc = secDesc.Instrument
 		fmt.Println(secDesc)
 	}
 	return positions
