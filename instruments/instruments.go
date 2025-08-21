@@ -45,7 +45,7 @@ func SecurityBy(token string, figi string, itype tinvest.SecurityType) Security 
 	url_shares := "https://invest-public-api.tinkoff.ru/rest/tinkoff.public.invest.api.contract.v1.InstrumentsService/ShareBy"
 	url_bondes := "https://invest-public-api.tbank.ru/rest/tinkoff.public.invest.api.contract.v1.InstrumentsService/BondBy"
 	url_currences := "https://invest-public-api.tbank.ru/rest/tinkoff.public.invest.api.contract.v1.InstrumentsService/CurrencyBy"
-	url_etfs := "https://invest-public-api.tbank.ru/rest/tinkoff.public.invest.api.contract.v1.InstrumentsService/Etfs"
+	url_etfs := "https://invest-public-api.tbank.ru/rest/tinkoff.public.invest.api.contract.v1.InstrumentsService/EtfBy"
 	url_futuries := "https://invest-public-api.tbank.ru/rest/tinkoff.public.invest.api.contract.v1.InstrumentsService/FutureBy"
 
 	var url string

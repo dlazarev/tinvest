@@ -82,7 +82,6 @@ func GetPositions(token string, accountId string) Positions {
 	for i := range positions.Securities {
 		secDesc := instruments.SecurityBy(token, positions.Securities[i].Figi, positions.Securities[i].InstrumentType)
 		positions.Securities[i].InstrumentDesc = secDesc.Instrument
-		fmt.Println(secDesc)
 	}
 	return positions
 }
