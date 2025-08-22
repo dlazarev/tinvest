@@ -42,25 +42,20 @@ type Security struct {
 }
 
 func SecurityBy(token string, figi string, itype tinvest.SecurityType) Security {
-	url_shares := "https://invest-public-api.tinkoff.ru/rest/tinkoff.public.invest.api.contract.v1.InstrumentsService/ShareBy"
-	url_bondes := "https://invest-public-api.tbank.ru/rest/tinkoff.public.invest.api.contract.v1.InstrumentsService/BondBy"
-	url_currences := "https://invest-public-api.tbank.ru/rest/tinkoff.public.invest.api.contract.v1.InstrumentsService/CurrencyBy"
-	url_etfs := "https://invest-public-api.tbank.ru/rest/tinkoff.public.invest.api.contract.v1.InstrumentsService/EtfBy"
-	url_futuries := "https://invest-public-api.tbank.ru/rest/tinkoff.public.invest.api.contract.v1.InstrumentsService/FutureBy"
 
-	var url string
+	var url = "https://invest-public-api.tinkoff.ru/rest/tinkoff.public.invest.api.contract.v1.InstrumentsService/"
 
 	switch itype {
 	case tinvest.Share:
-		url = url_shares
+		url += "ShareBy"
 	case tinvest.Bond:
-		url = url_bondes
+		url += "BondBy"
 	case tinvest.Currency:
-		url = url_currences
+		url += "CurrencyBy"
 	case tinvest.Etf:
-		url = url_etfs
+		url += "EtfBy"
 	case tinvest.Future:
-		url = url_futuries
+		url += "FutureBy"
 	default:
 		log.Fatal("SecurityBy() Unknown type of security ")
 	}
