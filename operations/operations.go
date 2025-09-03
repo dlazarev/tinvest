@@ -7,7 +7,6 @@ import (
 	"ldv/tinvest/instruments"
 	"time"
 
-	//	"ldv/tinvest/instruments"
 	"log"
 	"strconv"
 )
@@ -60,7 +59,7 @@ type Security struct {
 	ExchangeBlocked      bool
 	InstrumentType       tinvest.SecurityType
 	InstrumentDesc       instruments.SecurityDesc
-	WeightedAveragePrice float64
+	WeightedAveragePrice tinvest.SumFloat
 }
 
 type OperationState string
@@ -75,6 +74,11 @@ type Trade struct {
 	Quality  IntString `json:"quantity"`
 	Price    tinvest.Amount
 	TradeId  string
+}
+
+type ChildOperation struct {
+	InstrumentUid string
+	Payment       tinvest.Amount
 }
 type Operation struct {
 	Id                string
@@ -92,6 +96,7 @@ type Operation struct {
 	AssetUid          string
 	PositionUid       string
 	InstrumentUid     string
+	ChildOperations   []ChildOperation
 }
 
 type Opers struct {

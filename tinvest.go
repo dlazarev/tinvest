@@ -1,6 +1,7 @@
 package tinvest
 
 import (
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -12,6 +13,12 @@ type Amount struct {
 	Currency string
 	Units    string
 	Nano     int
+}
+
+type SumFloat float64
+
+func (sf SumFloat) String() string {
+	return fmt.Sprintf("%.2f", float64(sf))
 }
 
 func (a Amount) Sum() float64 {
