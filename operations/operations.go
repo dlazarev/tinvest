@@ -60,6 +60,7 @@ type Security struct {
 	InstrumentType       tinvest.SecurityType
 	InstrumentDesc       instruments.SecurityDesc
 	WeightedAveragePrice tinvest.SumFloat
+	LastPrice            tinvest.SumFloat
 }
 
 type OperationState string
