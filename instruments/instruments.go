@@ -35,6 +35,8 @@ type SecurityDesc struct {
 	Brand                 tinvest.Brand
 	MinPriceIncrement     tinvest.Amount
 	InstrumentType        tinvest.SecurityType
+	Nominal               tinvest.Amount // номинал (номинальная цена) облигации
+	Aci_value             tinvest.Amount // накопленный купонный доход
 }
 
 type Security struct {

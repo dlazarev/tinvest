@@ -11,6 +11,7 @@ type LastPrice struct {
 	Time          string
 	InstrumentUid string
 	LastPriceType string
+	Figi          string
 }
 type Prices struct {
 	LastPrices []LastPrice
